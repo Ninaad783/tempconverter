@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        h1{
+            background-color: beige;
+            padding: 20px 30px; /* Adjust padding as needed */
+            font-size: 30px; /* Adjust font size as needed */
+            border:none;
+            border-radius: 30px;
+            cursor: pointer;
+            display:inline;
+            
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: aqua;
+        }
+        input, button {
+            margin: 10px;
+            padding: 5px;
+            background-color: beige;
+            color:black;
+            border-radius:35px;
+            transition-duration: 0.4s;
+            
+
+        }
+        
+
+        input[type=text] {
+        width: 15%;
+        padding: 20px 20px;
+        margin: 50px 0;
+        border-radius: 40px;
+        }
+
+        .button {
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: #04AA6D; /* Green */
+  color: white;
+}
+
+    </style>
+</head>
+<body>
+
+<h1>
+    Temperature Converter App
+</h1>
+<center>
+<input type="text" id="temperatureInput" placeholder="Enter temperature">
+</center>
+
+<div className="button">
+<button onclick="celsiusToFahrenheit()" className="button">&#x2103; to &#x2109; </button>
+<button onclick="fahrenheitToCelsius()">&#x2109; to &#x2103;</button>
+<button onclick="clearInput()">Clear</button>
+<p id="result"></p>
+</div>
+<script>
+    function celsiusToFahrenheit() {
+        let celsius = document.getElementById('temperatureInput').value;
+        if (validateCelsiusInput(celsius)) {
+            let fahrenheit = (celsius * 9/5) + 32;
+            document.getElementById('result').innerText = `${celsius}°C is ${fahrenheit.toFixed(2)}°F`;
+        }
+    }
+
+    function fahrenheitToCelsius() {
+        let fahrenheit = document.getElementById('temperatureInput').value;
+        if (validateFahrenheitInput(fahrenheit)) {
+            let celsius = (fahrenheit - 32) * 5/9;
+            document.getElementById('result').innerText = `${fahrenheit}°F is ${celsius.toFixed(2)}°C`;
+        }
+    }
+
+    function clearInput() {
+        document.getElementById('temperatureInput').value = '';
+        document.getElementById('result').innerText = '';
+    }
+
+    function validateCelsiusInput(input) {
+        if (input === '') {
+            displayError('Celsius input cannot be empty.');
+            return false;
+        }
+
+        if (!/^\d*\.?\d+$/.test(input)) {
+            displayError('Celsius input dont be the special characters it be valid number.');
+            return false;
+        }
+
+        let celsius = parseFloat(input);
+
+        if (celsius < -273.15) {
+            displayError('Celsius input cannot be below -273.15°C (absolute zero).');
+            return false;
+        }
+
+        if (celsius > 1000) {
+            displayError('Celsius input is too high. Please enter a value below 1000°C.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function validateFahrenheitInput(input) {
+        if (input === '') {
+            displayError('Fahrenheit input cannot be empty.');
+            return false;
+        }
+        if(input<0)
+        {
+            displayError('Number not be the negative.');
+            return false;
+        }
+
+        if (!/^\d*\.?\d+$/.test(input)) {
+            displayError('Fahrenheit input must be a valid number not be special characters.');
+            return false;
+        }
+
+        let fahrenheit = parseFloat(input);
+
+        if (fahrenheit < -459.67) {
+            displayError('Fahrenheit input cannot be below -459.67°F (absolute zero).');
+            return false;
+        }
+
+        if (fahrenheit > 1832) {
+            displayError('Fahrenheit input is too high. Please enter a value below 1832°F.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function displayError(message) {
+        document.getElementById('result').innerText = message;
+    }
+</script>
+
+</body>
+</html>
